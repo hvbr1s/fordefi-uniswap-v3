@@ -11,9 +11,7 @@ import JSBI from 'jsbi';
 const fordefiProvider = new FordefiWeb3Provider(fordefiConfig);
 const provider = new ethers.providers.Web3Provider(fordefiProvider)
 
-
 async function main() {
-
   // Check which tokens we're swapping
   console.log("Token in -> ", CurrentConfig.tokens.in.address)
   console.log("Token out -> ", CurrentConfig.tokens.out.address)
@@ -24,20 +22,19 @@ async function main() {
     provider,
   })
 
-  // Define swap and amount
+  // Define swap and token amount
   const options: SwapOptionsSwapRouter02 = {
     recipient: CurrentConfig.wallet?.address || fordefiConfig.address,
     slippageTolerance: new Percent(100, 10_000), // define slippage, 1% in this example
     deadline: Math.floor(Date.now() / 1000 + 1800),
     type: SwapType.SWAP_ROUTER_02,
   }
-
   const rawTokenAmountIn: JSBI = fromReadableAmount(
     CurrentConfig.tokens.amountIn,
     CurrentConfig.tokens.in.decimals
   )
 
-  // Define swap route
+  // Find route for swap
   const route = await router.route(
     CurrencyAmount.fromRawAmount(
       CurrentConfig.tokens.in,
@@ -50,8 +47,6 @@ async function main() {
   if (!route) {
     throw new Error('No route found by the AlphaRouter');
   }
-
-  console.log("Route -> ", route)
 
   // Sign approval for tokens in the swap
   const signer = provider.getSigner();
@@ -101,6 +96,5 @@ async function main() {
   else{
     console.log('Swap successful! ✅')
   }
-
 }
 main().catch(console.error);
