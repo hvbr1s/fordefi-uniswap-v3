@@ -1,4 +1,3 @@
-// This file stores web3 related constants such as addresses, token definitions, ETH currency references and ABI's
 import { Token, ChainId } from '@uniswap/sdk-core'
 
 // Addresses

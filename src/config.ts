@@ -38,7 +38,6 @@ const USDC_TOKEN = new Token(
   'USD//C'
 )
 
-
 // Configure the Fordefi provider
 export const fordefiConfig: FordefiProviderConfig = {
   chainId: EvmChainId.NUMBER_1, // Mainnet
